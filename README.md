@@ -56,11 +56,12 @@ Dr. Anna Weber
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `sender` | dictionary | `(:)` | Sender: `name`, `street`, `city`, `phone`, `email`, `iban`, `bic`, `bank`, `qr` |
+| `sender` | dictionary | `(:)` | Sender: `name`, `street`, `city`, `phone`, `email`, `iban`, `bic`, `bank`, `qr` (bool) |
 | `recipient` | array | `()` | Recipient address lines |
 | `date` | string | `none` | Date (shown in Informationsblock) |
 | `subject` | string | `none` | Subject line (bold) |
-| `annotations` | array | `()` | Postal annotations (e.g. "Einschreiben") |
+| `closing` | string | `none` | Closing phrase (e.g. "Mit freundlichen Grüßen") |
+| `signature` | content | `none` | Signature image: `image("unterschrift.svg")` (.svg, .png, .jpg) — scaled to 2 lines |
 | `fold-marks` | bool | `true` | Show fold and punch hole marks |
 
 ## DIN 5008 Form A Layout

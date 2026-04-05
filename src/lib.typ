@@ -11,6 +11,8 @@
   recipient: (),
   date: none,
   subject: none,
+  closing: none,
+  signature: none,
   fold-marks: true,
   body,
 ) = {
@@ -192,7 +194,7 @@
         vcard-parts.push("END:VCARD")
         let vcard = vcard-parts.join("\n")
         v(0.5mm)
-        align(right, qr-code(vcard, width: 20mm, color: gray))
+        align(right, qr-code(vcard, width: 18mm, color: gray))
       }
     }),
   )
@@ -244,4 +246,20 @@
 
   // body
   body
+
+  // closing, signature, sender name — 3 blank lines between closing and name (DIN 5008)
+  if closing != none {
+    v(4mm)
+    text(closing)
+    v(1.5em)
+    v(1.5em)
+    v(1.5em)
+    if signature != none {
+      // place signature over the 3 blank lines, scaled proportionally
+      place(dy: -4.5em, box(height: 3em, signature))
+    }
+    if sender.at("name", default: none) != none {
+      text(sender.name)
+    }
+  }
 }
