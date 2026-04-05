@@ -61,8 +61,13 @@ Dr. Anna Weber
 | `date` | string | `none` | Date (shown in Informationsblock) |
 | `subject` | string | `none` | Subject line (bold) |
 | `closing` | string | `none` | Closing phrase (e.g. "Mit freundlichen Grüßen") |
-| `signature` | content | `none` | Signature image: `image("unterschrift.svg")` (.svg, .png, .jpg) — scaled to 2 lines |
+| `signature` | content | `none` | Signature image: `image("unterschrift.svg")` (.svg, .png, .jpg) — scaled to 3 lines |
+| `attachments` | array | `()` | Attachment descriptions (rendered after sender name) |
 | `fold-marks` | bool | `true` | Show fold and punch hole marks |
+
+### Signature
+
+SVG is recommended for signatures (vector, lossless scaling). Use `#103c78` as stroke color — this matches Rohrer & Klingner *Salix* iron gall ink. PNG and JPG also work but may lose quality when scaled.
 
 ## DIN 5008 Form A Layout
 

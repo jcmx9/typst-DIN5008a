@@ -22,7 +22,12 @@
   date: "05. April 2026",
   subject: "Manuskript 'Die Abenteuer der kleinen Eule' – Einreichung",
   closing: "Mit herzlichen Grüßen",
-  // signature: image("unterschrift.svg"),  // uncomment if file exists
+  signature: image("unterschrift.svg"),
+  attachments: (
+    "Manuskript (Druckfassung, 48 Seiten)",
+    "Exposé mit Kapitelübersicht",
+    "3 Illustrationsproben (Aquarell, A4)",
+  ),
 )
 
 Sehr geehrte Frau Bergmann,
@@ -63,13 +68,3 @@ Die ISBN-Nummern meiner bisherigen Titel lauten:
 ```
 
 Ich würde mich sehr freuen, von Ihnen zu hören, und stehe für Rückfragen jederzeit gerne zur Verfügung.
-
-// Signature is placed automatically between closing and sender name.
-// To use: place unterschrift.svg (or .png/.jpg) next to this file and uncomment:
-// signature: image("unterschrift.svg"),
-
-#v(4mm)
-*Anlagen:*\
-#bullet Manuskript (Druckfassung, 48 Seiten)\
-#bullet Exposé mit Kapitelübersicht\
-#bullet 3 Illustrationsproben (Aquarell, A4)

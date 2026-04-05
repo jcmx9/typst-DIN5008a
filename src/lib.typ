@@ -13,6 +13,7 @@
   subject: none,
   closing: none,
   signature: none,
+  attachments: (),
   fold-marks: true,
   body,
 ) = {
@@ -248,18 +249,31 @@
   body
 
   // closing, signature, sender name — 3 blank lines between closing and name (DIN 5008)
+  // signature: SVG recommended — use #103c78 (Rohrer & Klingner Salix) as stroke color
   if closing != none {
-    v(4mm)
+    v(1.5em)
     text(closing)
     v(1.5em)
     v(1.5em)
     v(1.5em)
     if signature != none {
-      // place signature over the 3 blank lines, scaled proportionally
-      place(dy: -4.5em, box(height: 3em, signature))
+      // place signature over the 3 blank lines, fill available space
+      place(dy: -4.5em, box(height: 4.5em, signature))
     }
     if sender.at("name", default: none) != none {
       text(sender.name)
+    }
+
+    // attachments — after sender name per DIN 5008
+    if attachments.len() > 0 {
+      v(1.5em)
+      text(weight: "bold", "Anlagen:")
+      linebreak()
+      for att in attachments {
+        text(font: font-ui, "▪")
+        [ #att]
+        linebreak()
+      }
     }
   }
 }
