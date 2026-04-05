@@ -30,10 +30,10 @@
   let margin-bottom = 30mm            // bottom margin (space for footer)
   let return-addr-y = 40.7mm          // return address (bottom of Zusatz-/Vermerkzone)
   let addr-field-y = 44.7mm           // address zone top (27mm + 17.7mm)
-  let info-block-y = 32.0mm           // information block top
+  let info-block-y = 27.0mm           // information block top (aligned with address field)
   let info-block-x = 125.0mm          // information block left edge
   let info-block-w = 75.0mm           // information block width
-  let text-body-y = 103.46mm          // subject line position (per DIN diagram)
+  let text-body-y = 80.5mm            // subject (2 blank lines after address field end at 72mm, DIN 5008:2020)
   let fold-1 = 87mm                   // fold mark 1
   let fold-2 = 192mm                  // fold mark 2
   let punch = 148.5mm                 // punch hole mark
@@ -117,7 +117,7 @@
 
   // -- Default text settings --
   set text(font: font-body, size: 11pt, lang: "de", region: "DE")
-  set par(justify: true, leading: 0.5em, spacing: 1.5em)
+  set par(justify: true, leading: 5.5pt, spacing: 16.5pt)  // 150% line height (5.5pt between lines, 16.5pt = one blank line between paragraphs)
   set list(marker: text(font: font-ui, "▪"))
   // prevent orphaned list items (min 2 together)
   show list: set block(breakable: false)
@@ -172,11 +172,11 @@
       })
       // date — last field in information block
       if date != none {
-        v(2mm)
         align(right, text(font: font-body, size: 11pt, date))
       }
-      v(1mm)
+      v(-1mm)
       line(length: 100%, stroke: 0.5pt + gray)
+      v(-1mm)
       // QR code — generated from sender data at compile time
       if sender.at("qr", default: false) == true {
         let vcard-parts = ("BEGIN:VCARD", "VERSION:3.0")
@@ -195,7 +195,7 @@
         vcard-parts.push("END:VCARD")
         let vcard = vcard-parts.join("\n")
         v(0.5mm)
-        align(right, qr-code(vcard, width: 18mm, color: gray))
+        align(right, qr-code(vcard, width: 15mm, color: gray))
       }
     }),
   )
@@ -251,22 +251,31 @@
   // closing, signature, sender name — 3 blank lines between closing and name (DIN 5008)
   // signature: SVG recommended — use #103c78 (Rohrer & Klingner Salix) as stroke color
   if closing != none {
-    v(1.5em)
-    text(closing)
-    v(1.5em)
-    v(1.5em)
-    v(1.5em)
+    // 3 blank lines between closing and name (DIN 5008)
+    // single paragraph with linebreak() — uses same leading as body text
+    let name = sender.at("name", default: "")
+    {
+      closing
+      linebreak()
+      hide[.]
+      linebreak()
+      hide[.]
+      linebreak()
+      hide[.]
+      linebreak()
+      name
+    }
+    // signature on own layer over the blank lines
     if signature != none {
-      // place signature over the 3 blank lines, fill available space
-      place(dy: -4.5em, box(height: 4.5em, signature))
+      context {
+        let h = measure({
+          closing; linebreak(); hide[.]; linebreak(); hide[.]; linebreak(); hide[.]; linebreak(); name
+        }).height
+        place(dy: -h, box(height: h, signature))
+      }
     }
-    if sender.at("name", default: none) != none {
-      text(sender.name)
-    }
-
-    // attachments — after sender name per DIN 5008
     if attachments.len() > 0 {
-      v(1.5em)
+      v(16.5pt)
       text(weight: "bold", "Anlagen:")
       linebreak()
       for att in attachments {

@@ -32,7 +32,7 @@
 
 Sehr geehrte Frau Bergmann,
 
-mit großer Freude übersende ich Ihnen mein Manuskript _Die Abenteuer der kleinen Eule_ zur Begutachtung für Ihr Kinderbuchprogramm. Die Geschichte richtet sich an Kinder im Alter von 5 bis 8 Jahren und umfasst 48 illustrierte Seiten.
+mit großer Freude übersende ich Ihnen mein Manuskript _Die Abenteuer der kleinen Eule_ zur Begutachtung für Ihr Kinderbuchprogramm. Die Geschichte richtet sich an Kinder im Alter von 5 bis 8 Jahren und umfasst 48 illustrierte Seiten. Seit mehreren Jahren beschäftige ich mich intensiv mit dem Thema Freundschaft und Zusammenhalt in der Kinderliteratur und bin überzeugt, dass diese Erzählung junge Leserinnen und Leser begeistern wird.
 
 *Zum Inhalt*
 
