@@ -1,0 +1,7 @@
+.github/
+docs/
+tests/
+scripts/
+CHANGELOG.md
+.gitignore
+.typstignore

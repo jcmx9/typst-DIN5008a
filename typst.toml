@@ -1,0 +1,17 @@
+[package]
+name = "din5008a"
+version = "0.1.1"
+entrypoint = "src/lib.typ"
+compiler = "0.12.0"
+authors = ["jcmx9"]
+license = "MIT"
+description = "German business letter template following DIN 5008 Form A."
+repository = "https://github.com/jcmx9/typst-DIN5008a"
+keywords = ["letter", "din5008", "business", "german", "brief"]
+categories = ["office"]
+exclude = [".github/*", "docs/*", "tests/*", "scripts/*", "Justfile", "CHANGELOG.md"]
+
+[template]
+path = "template"
+entrypoint = "main.typ"
+thumbnail = "template/thumbnail.png"
