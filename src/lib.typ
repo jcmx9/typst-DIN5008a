@@ -17,6 +17,7 @@
   // -- Fonts --
   let font-body = "Source Serif 4"
   let font-ui = "Source Sans 3"
+  let font-mono = "Source Code Pro"
   let gray = rgb(128, 128, 128)
 
   // -- DIN 5008 Form A measurements (mm from page top) --
@@ -115,6 +116,27 @@
   set text(font: font-body, size: 11pt, lang: "de", region: "DE")
   set par(justify: true, leading: 0.5em, spacing: 1.5em)
   set list(marker: text(font: font-ui, "▪"))
+  // prevent orphaned list items (min 2 together)
+  show list: set block(breakable: false)
+  show enum: set block(breakable: false)
+  // tables: monospace 10pt, compact, header darker, zebra stripes
+  show table: set text(font: font-mono, size: 10pt)
+  set table(
+    inset: (x: 6pt, y: 3pt),
+    fill: (_, y) => {
+      if y == 0 { rgb(210, 210, 210) }
+      else if calc.odd(y) { white }
+      else { rgb(240, 240, 240) }
+    },
+    stroke: 0.75pt + gray,
+  )
+  show table.cell.where(y: 0): set text(weight: "bold")
+  // code blocks: monospace with light background, min 3 lines together
+  show raw.where(block: true): it => {
+    set text(font: font-mono, size: 10pt)
+    block(width: 100%, fill: rgb(245, 245, 245), inset: 8pt, radius: 2pt, breakable: false, it)
+  }
+  show raw.where(block: false): set text(font: font-mono, size: 10pt)
 
   // ============================================================
   // Information block — 32mm top, 125mm left, 75mm wide
