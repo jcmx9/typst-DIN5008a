@@ -13,6 +13,7 @@
   subject: none,
   closing: none,
   signature: none,
+  debug: false,
   attachments: (),
   fold-marks: true,
   body,
@@ -22,12 +23,17 @@
   let font-ui = "Source Sans 3"
   let font-mono = "Source Code Pro"
   let gray = rgb(128, 128, 128)
+  let accent = rgb("#B03060")
+  let dbg = if debug { 1pt + red } else { none }
+  let dbg-fill = if debug { rgb(255, 0, 0, 15%) } else { none }
 
   // -- DIN 5008 Form A measurements (mm from page top) --
   let margin-left = 25mm              // left margin
   let margin-right = 20mm             // right margin (binding edge)
   let margin-top = 20mm               // top margin
-  let margin-bottom = 26mm             // separator line + 3 lines 9pt/150% (14.29mm) + 2×4.23mm + page number
+  let margin-bottom = 26mm              // 4mm + line + 4mm + 12.7mm (3 lines 9pt) + 5mm page edge
+  let footer-line-y = 297mm - 5mm - 12.7mm - 4mm  // separator line: 275.3mm from top
+  // = 273.71mm from top
   let return-addr-y = 40.7mm          // return address (bottom of Zusatz-/Vermerkzone)
   let addr-field-y = 44.7mm           // address zone top (27mm + 17.7mm)
   let info-block-y = 32.0mm           // information block top (DIN diagram: 32mm)
@@ -56,62 +62,64 @@
       let pg = counter(page).get().first()
       if pg > 1 {
         set text(font: font-ui, size: 9pt, fill: gray)
-        align(right, {
+        box(width: 100%, stroke: dbg, fill: dbg-fill, align(right, {
           recipient-name
           sep
           if subject != none { subject }
           sep
           [Seite #pg]
-        })
+        }))
       }
     },
-    // footer: centered separator line + 3 lines
-    footer: {
-      set text(font: font-ui, size: 9pt, fill: gray)
-      v(2mm)
-      line(length: 100%, stroke: 0.5pt + gray)
-      v(1.5mm)
-      align(center, {
-        {
-          let parts = ()
-          if sender.at("name", default: none) != none { parts.push(sender.name) }
-          if sender.at("street", default: none) != none and sender.at("city", default: none) != none {
-            parts.push(sender.street + ", " + sender.city)
-          }
-          if sender.at("phone", default: none) != none { parts.push("Telefon " + sender.phone) }
-          if sender.at("email", default: none) != none { parts.push("E-Mail " + sender.email) }
-          parts.join([ ▪ ])
-        }
-        linebreak()
-        {
-          let bank-parts = ()
-          if sender.at("iban", default: none) != none { bank-parts.push("IBAN " + sender.iban) }
-          if sender.at("bic", default: none) != none { bank-parts.push("BIC " + sender.bic) }
-          if sender.at("bank", default: none) != none { bank-parts.push(sender.bank) }
-          if bank-parts.len() > 0 {
-            bank-parts.join([ ▪ ])
-            linebreak()
-          }
-        }
-        context {
-          let pg = counter(page).get().first()
-          let total = counter(page).final().first()
-          [Seite #pg von #total]
-        }
-      })
-    },
-    footer-descent: 4.23mm,  // DIN 5008 Form A exact
-    // fold marks and punch hole (page 1 only)
+    footer: none,
+    // background: fold marks + footer (all absolute positions)
     background: context {
       let pg = counter(page).get().first()
+      // fold marks (page 1 only)
       if fold-marks and pg == 1 {
         place(top + left, dx: 0mm, dy: fold-1,
-          line(length: 9mm, stroke: 0.75pt + gray))
+          line(length: 9mm, stroke: 0.75pt + accent))
         place(top + left, dx: 0mm, dy: punch,
-          line(length: 11mm, stroke: 0.75pt + gray))
+          line(length: 11mm, stroke: 0.75pt + accent))
         place(top + left, dx: 0mm, dy: fold-2,
-          line(length: 9mm, stroke: 0.75pt + gray))
+          line(length: 9mm, stroke: 0.75pt + accent))
       }
+      // footer: absolute position on every page
+      // line at 273.71mm from top, text starts at 277.71mm, ends at 292mm (5mm from bottom)
+      place(top + left, dx: margin-left, dy: footer-line-y,
+        line(length: 165mm, stroke: 0.75pt + accent))
+      place(top + left, dx: margin-left, dy: footer-line-y + 4mm,
+        box(width: 165mm, height: 12.7mm, stroke: dbg, fill: dbg-fill, {
+          set text(font: font-ui, size: 9pt, fill: gray)
+          align(center, {
+            {
+              let parts = ()
+              if sender.at("name", default: none) != none { parts.push(sender.name) }
+              if sender.at("street", default: none) != none and sender.at("city", default: none) != none {
+                parts.push(sender.street + ", " + sender.city)
+              }
+              if sender.at("phone", default: none) != none { parts.push("Telefon " + sender.phone) }
+              if sender.at("email", default: none) != none { parts.push("E-Mail " + sender.email) }
+              parts.join([ ▪ ])
+            }
+            linebreak()
+            {
+              let bank-parts = ()
+              if sender.at("iban", default: none) != none { bank-parts.push("IBAN " + sender.iban) }
+              if sender.at("bic", default: none) != none { bank-parts.push("BIC " + sender.bic) }
+              if sender.at("bank", default: none) != none { bank-parts.push(sender.bank) }
+              if bank-parts.len() > 0 {
+                bank-parts.join([ ▪ ])
+                linebreak()
+              }
+            }
+            {
+              let pg = counter(page).get().first()
+              let total = counter(page).final().first()
+              [Seite #pg von #total]
+            }
+          })
+        }))
     },
   )
 
@@ -142,13 +150,13 @@
   show raw.where(block: false): set text(font: font-mono, size: 10pt)
 
   // ============================================================
-  // Information block — 32mm top, 125mm left, 75mm wide
+  // Information block — 32mm top, 125mm left, 75mm × 63mm
   // ============================================================
   place(top + left,
     dx: info-block-x - margin-left,
     dy: info-block-y - margin-top,
-    box(width: info-block-w, {
-      set text(font: font-ui, size: 11pt, fill: black)
+    box(width: info-block-w, height: 63mm, stroke: dbg, fill: dbg-fill, {
+      set text(font: font-ui, size: 11pt, fill: accent)
       align(right, {
         if sender.at("name", default: none) != none {
           text(sender.name)
@@ -170,14 +178,7 @@
           [E-Mail #sender.email]
         }
       })
-      // date — last field in information block
-      if date != none {
-        align(right, text(font: font-body, size: 11pt, date))
-      }
-      v(-1mm)
-      line(length: 100%, stroke: 0.5pt + gray)
-      v(-1mm)
-      // QR code — generated from sender data at compile time
+      // QR code — directly below sender text
       if sender.at("qr", default: false) == true {
         let vcard-parts = ("BEGIN:VCARD", "VERSION:3.0")
         if sender.at("name", default: none) != none {
@@ -194,8 +195,15 @@
         }
         vcard-parts.push("END:VCARD")
         let vcard = vcard-parts.join("\n")
-        v(0.5mm)
-        align(right, qr-code(vcard, width: 15mm, color: gray))
+        align(right, qr-code(vcard, width: 15mm, color: accent))
+      }
+      v(1mm)
+      // separator line
+      line(length: 100%, stroke: 0.75pt + accent)
+      // date — below line
+      linebreak()
+      if date != none {
+        align(right, text(font: font-body, size: 11pt, fill: black, date))
       }
     }),
   )
@@ -206,16 +214,16 @@
   place(top + left,
     dx: 0mm,
     dy: return-addr-y - margin-top,
-    {
-      set text(font: font-ui, size: 9pt, fill: gray)
-      underline(offset: 1.5pt, stroke: 0.3pt + gray, {
+    box(width: 85mm, stroke: dbg, fill: dbg-fill, {
+      set text(font: font-ui, size: 9pt, fill: accent)
+      underline(offset: 1.5pt, stroke: 0.3pt + accent, {
         if sender.at("name", default: none) != none { sender.name }
         sep
         if sender.at("street", default: none) != none { sender.street }
         sep
         if sender.at("city", default: none) != none { sender.city }
       })
-    },
+    }),
   )
 
   // ============================================================
@@ -224,7 +232,7 @@
   place(top + left,
     dx: 0mm,
     dy: addr-field-y - margin-top,
-    box(width: 85mm, {
+    box(width: 85mm, height: 27.3mm, stroke: dbg, fill: dbg-fill, {
       set text(font: font-body, size: 11pt, fill: black)
       for (i, addr-line) in recipient.enumerate() {
         text(addr-line)

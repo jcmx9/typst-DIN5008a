@@ -1,6 +1,7 @@
 #import "@local/din5008a:0.1.1": din5008a, bullet
 
 #show: din5008a.with(
+  debug: false,
   sender: (
     name: "Dr. Anna Weber",
     street: "Lindenallee 12",
