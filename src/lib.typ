@@ -27,13 +27,13 @@
   let margin-left = 25mm              // left margin
   let margin-right = 20mm             // right margin (binding edge)
   let margin-top = 20mm               // top margin
-  let margin-bottom = 30mm            // bottom margin (space for footer)
+  let margin-bottom = 26mm             // separator line + 3 lines 9pt/150% (14.29mm) + 2×4.23mm + page number
   let return-addr-y = 40.7mm          // return address (bottom of Zusatz-/Vermerkzone)
   let addr-field-y = 44.7mm           // address zone top (27mm + 17.7mm)
-  let info-block-y = 27.0mm           // information block top (aligned with address field)
+  let info-block-y = 32.0mm           // information block top (DIN diagram: 32mm)
   let info-block-x = 125.0mm          // information block left edge
   let info-block-w = 75.0mm           // information block width
-  let text-body-y = 80.5mm            // subject (2 blank lines after address field end at 72mm, DIN 5008:2020)
+  let text-body-y = 103.46mm          // subject position (DIN diagram: 103,46mm)
   let fold-1 = 87mm                   // fold mark 1
   let fold-2 = 192mm                  // fold mark 2
   let punch = 148.5mm                 // punch hole mark
@@ -100,7 +100,7 @@
         }
       })
     },
-    footer-descent: 8mm,
+    footer-descent: 4.23mm,  // DIN 5008 Form A exact
     // fold marks and punch hole (page 1 only)
     background: context {
       let pg = counter(page).get().first()
