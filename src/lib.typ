@@ -13,6 +13,7 @@
   subject: none,
   closing: none,
   signature: none,
+  accent: rgb("#B03060"),
   debug: false,
   attachments: (),
   fold-marks: true,
@@ -23,7 +24,6 @@
   let font-ui = "Source Sans 3"
   let font-mono = "Source Code Pro"
   let gray = rgb(128, 128, 128)
-  let accent = rgb("#B03060")
   let dbg = if debug { 1pt + red } else { none }
   let dbg-fill = if debug { rgb(255, 0, 0, 15%) } else { none }
 
@@ -278,7 +278,10 @@
         let h = measure({
           closing; linebreak(); hide[.]; linebreak(); hide[.]; linebreak(); hide[.]; linebreak(); name
         }).height
-        place(dy: -h, box(height: h, signature))
+        place(dy: -h, box(height: h, {
+          set text(fill: accent)
+          signature
+        }))
       }
     }
     // attachments after name
