@@ -251,21 +251,20 @@
   // closing, signature, sender name — 3 blank lines between closing and name (DIN 5008)
   // signature: SVG recommended — use #103c78 (Rohrer & Klingner Salix) as stroke color
   if closing != none {
-    // 3 blank lines between closing and name (DIN 5008)
-    // single paragraph with linebreak() — uses same leading as body text
     let name = sender.at("name", default: "")
-    {
-      closing
-      linebreak()
-      hide[.]
-      linebreak()
-      hide[.]
-      linebreak()
-      hide[.]
-      linebreak()
-      name
-    }
-    // signature on own layer over the blank lines
+    // parbreak() forces new paragraph = blank line before closing
+    parbreak()
+    // single paragraph: closing + 3 blank lines + name (all with same leading)
+    closing
+    linebreak()
+    hide[.]
+    linebreak()
+    hide[.]
+    linebreak()
+    hide[.]
+    linebreak()
+    name
+    // signature on own layer
     if signature != none {
       context {
         let h = measure({
@@ -274,8 +273,9 @@
         place(dy: -h, box(height: h, signature))
       }
     }
+    // attachments after name
     if attachments.len() > 0 {
-      v(16.5pt)
+      parbreak()
       text(weight: "bold", "Anlagen:")
       linebreak()
       for att in attachments {
