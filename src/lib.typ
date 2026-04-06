@@ -32,8 +32,9 @@
   let margin-left = 25mm              // left margin
   let margin-right = 20mm             // right margin (binding edge)
   let margin-top = 20mm               // top margin
-  let margin-bottom = 26mm              // 4mm + line + 4mm + 12.7mm (3 lines 9pt) + 5mm page edge
-  let footer-line-y = 297mm - 5mm - 12.7mm - 4mm  // separator line: 275.3mm from top
+  let margin-bottom = 28mm              // 4mm + line + 4mm + 12.7mm (3×9pt + 2×4.5pt) + 7mm page edge
+  let footer-bottom = 297mm - 7mm       // footer box bottom: 7mm from page edge
+  let footer-line-y = footer-bottom - 12.7mm - 4mm  // separator line above footer text
   // = 273.71mm from top
   let return-addr-y = 40.7mm          // return address (bottom of Zusatz-/Vermerkzone)
   let addr-field-y = 44.7mm           // address zone top (27mm + 17.7mm)
@@ -63,6 +64,19 @@
     // background: all DIN elements absolutely positioned
     background: context {
       let pg = counter(page).get().first()
+      // debug: vertical scale every 5mm on right edge
+      if debug {
+        for i in range(0, 60) {
+          let y = i * 5mm
+          let len = if calc.rem(i, 2) == 0 { 3mm } else { 1.5mm }
+          place(top + right, dx: 0mm, dy: y,
+            line(length: len, stroke: 0.5pt + red))
+          if calc.rem(i, 2) == 0 {
+            place(top + right, dx: len + 1mm, dy: y - 1.5mm,
+              text(font: font-ui, size: 5pt, fill: red, str(i * 5)))
+          }
+        }
+      }
       // follow-up header (page 2+)
       if pg > 1 {
         place(top + left, dx: margin-left, dy: 10mm,
@@ -91,7 +105,7 @@
       place(top + left, dx: margin-left, dy: footer-line-y,
         line(length: 165mm, stroke: 0.75pt + accent))
       place(top + left, dx: margin-left, dy: footer-line-y + 4mm,
-        box(width: 165mm, height: 12.7mm, stroke: dbg, fill: dbg-fill, {
+        box(width: 165mm, stroke: dbg, fill: dbg-fill, {
           set text(font: font-ui, size: 9pt, fill: gray)
           align(center, {
             {
@@ -134,6 +148,9 @@
 
   // -- Default text settings --
   set text(font: font-body, size: 11pt, lang: "de", region: "DE")
+  // all bold → semibold (headings, *strong*, etc.)
+  show strong: it => text(weight: "semibold", it.body)
+  show heading: it => text(weight: "semibold", size: 11pt, it.body)
   set par(justify: true, leading: 5.5pt, spacing: 16.5pt)  // 150% line height (5.5pt between lines, 16.5pt = one blank line between paragraphs)
   set list(marker: text(font: font-ui, "▪"))
   // prevent orphaned list items (min 2 together)
@@ -150,7 +167,7 @@
     },
     stroke: 0.75pt + gray,
   )
-  show table.cell.where(y: 0): set text(weight: "bold")
+  show table.cell.where(y: 0): set text(weight: "semibold")
   // code blocks: monospace with light background, min 3 lines together
   show raw.where(block: true): it => {
     set text(font: font-mono, size: 10pt)
@@ -164,9 +181,11 @@
   place(top + left,
     dx: info-block-x - margin-left,
     dy: info-block-y - margin-top,
-    box(width: info-block-w, height: 63mm, stroke: dbg, fill: dbg-fill, {
-      set text(font: font-ui, size: 11pt, fill: accent)
-      align(right, {
+    box(width: info-block-w, height: 63mm, stroke: dbg, fill: dbg-fill,
+      align(bottom + right, {
+        set text(font: font-ui, size: 11pt, fill: accent)
+        set par(spacing: 0pt, leading: 5.5pt)
+        // sender details — built bottom-up, displayed top-down
         if sender.at("name", default: none) != none {
           text(sender.name)
           linebreak()
@@ -186,35 +205,36 @@
         if sender.at("email", default: none) != none {
           [E-Mail #sender.email]
         }
-      })
-      // QR code — directly below sender text
-      if sender.at("qr", default: false) == true {
-        let vcard-parts = ("BEGIN:VCARD", "VERSION:3.0")
-        if sender.at("name", default: none) != none {
-          vcard-parts.push("FN:" + sender.name)
+        // QR code (optional)
+        if sender.at("qr", default: false) == true {
+          let vcard-parts = ("BEGIN:VCARD", "VERSION:3.0")
+          if sender.at("name", default: none) != none {
+            vcard-parts.push("FN:" + sender.name)
+          }
+          if sender.at("street", default: none) != none and sender.at("city", default: none) != none {
+            vcard-parts.push("ADR:;;" + sender.street + ";" + sender.city + ";;;Germany")
+          }
+          if sender.at("phone", default: none) != none {
+            vcard-parts.push("TEL:" + sender.phone)
+          }
+          if sender.at("email", default: none) != none {
+            vcard-parts.push("EMAIL:" + sender.email)
+          }
+          vcard-parts.push("END:VCARD")
+          let vcard = vcard-parts.join("\n")
+          v(4mm)
+          qr-code(vcard, width: 16mm, color: accent)
         }
-        if sender.at("street", default: none) != none and sender.at("city", default: none) != none {
-          vcard-parts.push("ADR:;;" + sender.street + ";" + sender.city + ";;;Germany")
+        // separator line
+        v(4mm)
+        line(length: info-block-w, stroke: 0.75pt + accent)
+        v(7mm)
+        // date
+        if date != none {
+          text(font: font-body, size: 11pt, fill: black, date)
+          v(1mm)
         }
-        if sender.at("phone", default: none) != none {
-          vcard-parts.push("TEL:" + sender.phone)
-        }
-        if sender.at("email", default: none) != none {
-          vcard-parts.push("EMAIL:" + sender.email)
-        }
-        vcard-parts.push("END:VCARD")
-        let vcard = vcard-parts.join("\n")
-        align(right, qr-code(vcard, width: 15mm, color: accent))
-      }
-      v(1mm)
-      // separator line
-      line(length: 100%, stroke: 0.75pt + accent)
-      // date — below line
-      linebreak()
-      if date != none {
-        align(right, text(font: font-body, size: 11pt, fill: black, date))
-      }
-    }),
+      })),
   )
 
   // ============================================================
@@ -225,7 +245,7 @@
     dy: return-addr-y - margin-top,
     box(width: 85mm, stroke: dbg, fill: dbg-fill, {
       set text(font: font-ui, size: 9pt, fill: accent)
-      underline(offset: 1.5pt, stroke: 0.3pt + accent, {
+      underline(offset: 1.5pt, stroke: 0.75pt + accent, {
         if sender.at("name", default: none) != none { sender.name }
         sep
         if sender.at("street", default: none) != none { sender.street }
@@ -258,7 +278,7 @@
   v(text-body-y - margin-top)
 
   if subject != none {
-    text(font: font-body, size: 11pt, weight: "bold", subject)
+    text(font: font-body, size: 11pt, weight: "semibold", subject)
     v(6mm)
   }
 
@@ -289,14 +309,14 @@
         }).height
         place(dy: -h, box(height: h, {
           set text(fill: accent)
-          signature
+          box(stroke: dbg, fill: dbg-fill, signature)
         }))
       }
     }
     // attachments after name
     if attachments.len() > 0 {
       parbreak()
-      text(weight: "bold", "Anlagen:")
+      text(weight: "semibold", "Anlagen:")
       linebreak()
       for att in attachments {
         text(font: font-ui, "▪")

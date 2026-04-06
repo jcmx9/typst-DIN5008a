@@ -1,4 +1,4 @@
-#import "@local/din5008a:0.1.1": din5008a, bullet
+#import "@local/din5008a:26.4.11": din5008a, bullet
 
 #show: din5008a.with(
   debug: false,
@@ -33,13 +33,13 @@
 
 Sehr geehrte Frau Bergmann,
 
-mit großer Freude übersende ich Ihnen mein Manuskript _Die Abenteuer der kleinen Eule_ zur Begutachtung für Ihr Kinderbuchprogramm. Die Geschichte richtet sich an Kinder im Alter von 5 bis 8 Jahren und umfasst 48 illustrierte Seiten. Seit mehreren Jahren beschäftige ich mich intensiv mit dem Thema Freundschaft und Zusammenhalt in der Kinderliteratur und bin überzeugt, dass diese Erzählung junge Leserinnen und Leser begeistern wird.
+mit großer Freude übersende ich Ihnen mein Manuskript _Die Abenteuer der kleinen Eule_ zur Begutachtung für Ihr Kinderbuchprogramm. Die Geschichte richtet sich an Kinder im Alter von 5 bis 8 Jahren und umfasst 48 illustrierte Seiten.
 
-*Zum Inhalt*
+= Zum Inhalt
 
-Die kleine Eule Frieda entdeckt eines Nachts, dass der Mond verschwunden ist. Gemeinsam mit ihren Freunden – dem schlauen Fuchs und der mutigen Maus – begibt sie sich auf eine Reise durch den Wald, um den Mond wiederzufinden. Dabei lernen die Tiere, dass man gemeinsam auch die größten Herausforderungen meistern kann.
+Die kleine Eule Frieda entdeckt eines Nachts, dass der Mond verschwunden ist. Gemeinsam mit ihren Freunden – dem schlauen Fuchs und der mutigen Maus – begibt sie sich auf eine Reise durch den Wald, um den Mond wiederzufinden. Dabei lernen die Tiere, dass man *gemeinsam* auch die größten Herausforderungen meistern kann.
 
-*Eckdaten zum Manuskript*
+== Eckdaten zum Manuskript
 
 #table(
   columns: (auto, auto),
@@ -51,21 +51,44 @@ Die kleine Eule Frieda entdeckt eines Nachts, dass der Mond verschwunden ist. Ge
   [Genre], [Kinderbuch / Vorlesebuch],
 )
 
-*Warum Ihr Verlag?*
+=== Warum Ihr Verlag?
 
 Ihr Programm überzeugt mich seit Jahren durch liebevoll gestaltete Kinderbücher mit pädagogischem Anspruch. Besonders die Reihe _Kleine Entdecker_ hat mich inspiriert, und ich glaube, dass _Die Abenteuer der kleinen Eule_ thematisch und stilistisch gut in Ihr Sortiment passen würde.
 
-Zu meiner Person: Ich bin promovierte Germanistin und arbeite seit zehn Jahren als freie Autorin. Meine bisherigen Veröffentlichungen umfassen:
+== Zur Person
 
-- _Wolkenreise_ (Sternberg Verlag, 2022) – ausgezeichnet mit dem Deutschen Kinderliteraturpreis in der Kategorie Bilderbuch
+Ich bin promovierte Germanistin und arbeite seit zehn Jahren als freie Autorin. Meine bisherigen Veröffentlichungen umfassen:
+
+- _Wolkenreise_ (Sternberg Verlag, 2022) – ausgezeichnet mit dem Deutschen Kinderliteraturpreis#footnote[Verliehen vom Arbeitskreis für Jugendliteratur e.V.]
 - _Der Bär, der nicht schlafen wollte_ (Mondlicht Verlag, 2024)
 - Diverse Kurzgeschichten in der Zeitschrift _Lesefreude_
 
-Die ISBN-Nummern meiner bisherigen Titel lauten:
+Die Gesamtauflage meiner Bücher beträgt über 25.000#super[1] Exemplare.
+
+=== Nummerierte Schritte
+
++ Manuskript einreichen
++ Lektoratsprüfung abwarten
++ Vertragsentwurf besprechen
++ Illustrationen finalisieren
+
+Die ISBN-Nummern meiner bisherigen Titel:
 
 ```
 978-3-86680-192-7  Wolkenreise (2022)
 978-3-86680-248-1  Der Bär, der nicht schlafen wollte (2024)
 ```
+
+Mein Honorarvorstellung liegt bei 8–12% vom Nettoladenpreis#footnote[Branchenüblich für Erstveröffentlichungen im Kinderbuchbereich.]. Weitere Details finden Sie auf meiner Website: https://anna-weber-autorin.example.de
+
+=== Textformatierungen
+
+Dieser Absatz zeigt _kursiv_, *semibold*, #underline[unterstrichen], #strike[durchgestrichen], `inline-code`, #sub[tiefgestellt] und #super[hochgestellt] in einem Satz.
+
+#quote(block: true, attribution: [Antoine de Saint-Exupéry])[
+  Man sieht nur mit dem Herzen gut. Das Wesentliche ist für die Augen unsichtbar.
+]
+
+#line(length: 100%, stroke: 0.75pt + luma(80%))
 
 Ich würde mich sehr freuen, von Ihnen zu hören, und stehe für Rückfragen jederzeit gerne zur Verfügung.
