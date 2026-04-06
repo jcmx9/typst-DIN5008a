@@ -312,7 +312,7 @@
         }).height
         let name-line-h = full-h - gap-h  // name height including leading
         let sig-h = measure(signature).height
-        place(dx: 2mm, dy: -(name-line-h + sig-h + 2mm), {
+        place(dx: 1mm, dy: -(name-line-h + sig-h + 1mm), {
           set text(fill: accent)
           box(stroke: dbg, fill: dbg-fill, signature)
         })
