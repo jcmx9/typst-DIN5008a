@@ -301,16 +301,16 @@
     hide[.]
     linebreak()
     name
-    // signature on own layer
+    // signature on own layer — bottom of signature touches top of name
     if signature != none {
       context {
-        let h = measure({
-          closing; linebreak(); hide[.]; linebreak(); hide[.]; linebreak(); hide[.]; linebreak(); name
-        }).height
-        place(dy: -h, box(height: h, {
+        let name-h = measure(name).height
+        let sig-h = measure(signature).height
+        // current position = bottom of name; move up by name + signature height
+        place(dy: -(name-h + sig-h), {
           set text(fill: accent)
           box(stroke: dbg, fill: dbg-fill, signature)
-        }))
+        })
       }
     }
     // attachments after name
