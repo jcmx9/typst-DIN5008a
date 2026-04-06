@@ -34,7 +34,7 @@ Die kleine Eule Frieda entdeckt eines Nachts, dass der Mond verschwunden ist. Ge
 | Illustrationen | 12 ganzseitige Aquarelle (beiliegend) |
 | Genre | Kinderbuch / Vorlesebuch |
 
-### Warum Ihr Verlag?
+## Warum Ihr Verlag?
 
 Ihr Programm überzeugt mich seit Jahren durch liebevoll gestaltete Kinderbücher mit pädagogischem Anspruch. Besonders die Reihe _Kleine Entdecker_ hat mich inspiriert, und ich glaube, dass _Die Abenteuer der kleinen Eule_ thematisch und stilistisch gut in Ihr Sortiment passen würde.
 
@@ -46,9 +46,7 @@ Ich bin promovierte Germanistin und arbeite seit zehn Jahren als freie Autorin. 
 - _Der Bär, der nicht schlafen wollte_ (Mondlicht Verlag, 2024)
 - Diverse Kurzgeschichten in der Zeitschrift _Lesefreude_
 
-Die Gesamtauflage meiner Bücher beträgt über 25.000 Exemplare.
-
-### Nummerierte Schritte
+## Nächste Schritte
 
 1. Manuskript einreichen
 2. Lektoratsprüfung abwarten
@@ -61,16 +59,5 @@ Die ISBN-Nummern meiner bisherigen Titel:
 978-3-86680-192-7  Wolkenreise (2022)
 978-3-86680-248-1  Der Bär, der nicht schlafen wollte (2024)
 ```
-
-Mein Honorarvorstellung liegt bei 8–12% vom Nettoladenpreis. Weitere Details finden Sie auf meiner Website: https://anna-weber-autorin.example.de
-
-### Textformatierungen
-
-Dieser Absatz zeigt _kursiv_, **semibold**, ~~durchgestrichen~~, `inline-code` in einem Satz.
-
-> Man sieht nur mit dem Herzen gut. Das Wesentliche ist für die Augen unsichtbar.
-> — Antoine de Saint-Exupéry
-
----
 
 Ich würde mich sehr freuen, von Ihnen zu hören, und stehe für Rückfragen jederzeit gerne zur Verfügung.
