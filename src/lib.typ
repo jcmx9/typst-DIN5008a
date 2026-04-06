@@ -2,6 +2,7 @@
 // Copyright (c) 2026 jcmx9 — MIT License
 
 #import "@preview/cades:0.3.1": qr-code
+#import "/version.typ": version
 
 // Bullet character in Source Sans 3 (consistent with header/footer)
 #let bullet = text(font: "Source Sans 3", "▪")
@@ -122,6 +123,13 @@
           })
         }))
     },
+  )
+
+  // PDF metadata
+  set document(
+    title: if subject != none { subject } else { "" },
+    author: sender.at("name", default: ""),
+    keywords: ("din5008a", "v" + version, "https://github.com/jcmx9/typst-DIN5008a"),
   )
 
   // -- Default text settings --
