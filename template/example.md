@@ -2,7 +2,8 @@
 sender:
   name: Dr. Anna Weber
   street: Lindenallee 12
-  city: 80331 München
+  zip: "80331"
+  city: München
   phone: "089 1234567"
   email: anna.weber@example.de
   iban: DE91 7002 0500 0009 8765 43
