@@ -1,5 +1,14 @@
 ---
-profile: example
+sender:
+  name: Dr. Anna Weber
+  street: Lindenallee 12
+  city: 80331 München
+  phone: "089 1234567"
+  email: anna.weber@example.de
+  iban: DE91 7002 0500 0009 8765 43
+  bic: BFSWDE33MUE
+  bank: Bank für Sozialwirtschaft
+  qr: true
 recipient:
   name: Sonnenschein Verlag GmbH
   extra: Frau Lisa Bergmann, Lektorat Kinderbuch
@@ -9,7 +18,7 @@ recipient:
 subject: "Manuskript 'Die Abenteuer der kleinen Eule' – Einreichung"
 date: 2026-04-05
 closing: "Mit herzlichen Grüßen"
-sign: true
+signature: unterschrift.svg
 attachments:
   - Manuskript (Druckfassung, 48 Seiten)
   - Exposé mit Kapitelübersicht
