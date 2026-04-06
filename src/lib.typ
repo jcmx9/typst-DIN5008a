@@ -304,10 +304,15 @@
     // signature on own layer — bottom of signature touches top of name
     if signature != none {
       context {
-        let name-h = measure(name).height
+        let full-h = measure({
+          closing; linebreak(); hide[.]; linebreak(); hide[.]; linebreak(); hide[.]; linebreak(); name
+        }).height
+        let gap-h = measure({
+          closing; linebreak(); hide[.]; linebreak(); hide[.]; linebreak(); hide[.]
+        }).height
+        let name-line-h = full-h - gap-h  // name height including leading
         let sig-h = measure(signature).height
-        // current position = bottom of name; move up by name + signature height
-        place(dy: -(name-h + sig-h), {
+        place(dx: 2mm, dy: -(name-line-h + sig-h + 2mm), {
           set text(fill: accent)
           box(stroke: dbg, fill: dbg-fill, signature)
         })
