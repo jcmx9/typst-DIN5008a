@@ -57,24 +57,25 @@
       left: margin-left,
       right: margin-right,
     ),
-    // page 1: no header — page 2+: follow-up header
-    header: context {
-      let pg = counter(page).get().first()
-      if pg > 1 {
-        set text(font: font-ui, size: 9pt, fill: gray)
-        box(width: 100%, stroke: dbg, fill: dbg-fill, align(right, {
-          recipient-name
-          sep
-          if subject != none { subject }
-          sep
-          [Seite #pg]
-        }))
-      }
-    },
+    header: none,
     footer: none,
-    // background: fold marks + footer (all absolute positions)
+    // background: all DIN elements absolutely positioned
     background: context {
       let pg = counter(page).get().first()
+      // follow-up header (page 2+)
+      if pg > 1 {
+        place(top + left, dx: margin-left, dy: 10mm,
+          box(width: 165mm, stroke: dbg, fill: dbg-fill, {
+            set text(font: font-ui, size: 9pt, fill: gray)
+            align(right, {
+              recipient-name
+              sep
+              if subject != none { subject }
+              sep
+              [Seite #pg]
+            })
+          }))
+      }
       // fold marks (page 1 only)
       if fold-marks and pg == 1 {
         place(top + left, dx: 0mm, dy: fold-1,
