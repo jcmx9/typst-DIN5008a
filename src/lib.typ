@@ -286,7 +286,14 @@
   body
 
   // closing, signature, sender name — 3 blank lines between closing and name (DIN 5008)
-  // signature: SVG recommended — use #103c78 (Rohrer & Klingner Salix) as stroke color
+  // signature: SVG string (from read()) — currentColor is replaced with Salix (#103c78)
+  let salix = "#103c78"
+  // resolve signature: string (SVG data) → image with Salix color, max 30pt height
+  let sig-img = if type(signature) == str {
+    image(bytes(signature.replace("currentColor", salix)), height: 30pt)
+  } else {
+    signature
+  }
   if closing != none {
     let name = sender.at("name", default: "")
     // parbreak() forces new paragraph = blank line before closing
@@ -302,20 +309,12 @@
     linebreak()
     name
     // signature on own layer — bottom of signature touches top of name
-    if signature != none {
+    if sig-img != none {
       context {
-        let full-h = measure({
-          closing; linebreak(); hide[.]; linebreak(); hide[.]; linebreak(); hide[.]; linebreak(); name
-        }).height
-        let gap-h = measure({
-          closing; linebreak(); hide[.]; linebreak(); hide[.]; linebreak(); hide[.]
-        }).height
-        let name-line-h = full-h - gap-h  // name height including leading
-        let sig-h = measure(signature).height
-        place(dx: 1mm, dy: -(name-line-h + sig-h + 1mm), {
-          set text(fill: accent)
-          box(stroke: dbg, fill: dbg-fill, signature)
-        })
+        let name-h = measure(name).height
+        let sig-h = measure(sig-img).height
+        place(dx: 1mm, dy: -(name-h + sig-h + 2mm),
+          box(stroke: dbg, fill: dbg-fill, sig-img))
       }
     }
     // attachments after name

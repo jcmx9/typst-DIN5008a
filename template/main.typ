@@ -23,7 +23,7 @@
   date: "5. April 2026",
   subject: "Manuskript 'Die Abenteuer der kleinen Eule' – Einreichung",
   closing: "Mit herzlichen Grüßen",
-  signature: image("unterschrift.svg"),
+  signature: read("unterschrift.svg"),
   attachments: (
     "Manuskript (Druckfassung, 48 Seiten)",
     "Exposé mit Kapitelübersicht",
