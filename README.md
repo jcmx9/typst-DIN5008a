@@ -105,6 +105,7 @@ hier steht der Brieftext.
 | `subject` | string | `none` | Subject line (semibold) |
 | `closing` | string | `none` | Closing phrase (e.g. "Mit freundlichen Grussen") |
 | `signature` | string | `none` | SVG data via `read("unterschrift.svg")` |
+| `signature-width` | length | `40mm` | Signature image width (height scales proportionally) |
 | `attachments` | array | `()` | Attachment descriptions (rendered after sender name) |
 | `accent` | color | `#B03060` | Accent color for fold marks, sender text, QR, lines |
 | `debug` | bool | `false` | Show red outlines on all positioned boxes |
@@ -115,7 +116,7 @@ hier steht der Brieftext.
 Pass SVG data as a string via `read()`. The template automatically:
 
 - Replaces `currentColor` with Salix iron gall ink color (`#103c78`)
-- Scales the image to max 30 pt height (proportional)
+- Scales the image to `signature-width` (default 40 mm, height proportional)
 - Positions it above the sender name with 2 mm gap and 1 mm indent
 
 For best results, use `fill="currentColor"` in the SVG so the template controls the color. SVGs with hardcoded colors (e.g. `stroke="#265282"`) keep their original color.
