@@ -302,23 +302,28 @@
     parbreak()
     // single paragraph: closing + 3 blank lines + name (all with same leading)
     closing
+
+    // 3 blank lines between closing and name (DIN 5008)
     linebreak()
     hide[.]
     linebreak()
     hide[.]
     linebreak()
     hide[.]
-    linebreak()
-    name
-    // signature on own layer — bottom of signature touches top of name
-    if sig-img != none {
-      context {
-        let name-h = measure(name).height
-        let sig-h = measure(sig-img).height
-        place(dx: 1mm, dy: -(name-h + sig-h + 2mm),
-          box(stroke: dbg, fill: dbg-fill, sig-img))
+
+    // name in own block — signature overlays blank lines above
+    parbreak()
+    block({
+      if sig-img != none {
+        context {
+          let sig-h = measure(sig-img).height
+          place(dx: 1mm, dy: -(sig-h + 2mm),
+            box(stroke: dbg, fill: dbg-fill, sig-img))
+        }
       }
-    }
+      name
+    })
+
     // attachments after name
     if attachments.len() > 0 {
       parbreak()
