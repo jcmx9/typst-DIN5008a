@@ -1,6 +1,6 @@
 [package]
 name = "din5008a"
-version = "26.4.22"
+version = "26.4.23"
 entrypoint = "src/lib.typ"
 compiler = "0.12.0"
 authors = ["jcmx9"]
