@@ -113,7 +113,8 @@
               let parts = ()
               if sender.at("name", default: none) != none { parts.push(sender.name) }
               if sender.at("street", default: none) != none and sender.at("city", default: none) != none {
-                parts.push(sender.street + ", " + sender.city)
+                parts.push(sender.street)
+                parts.push(sender.city)
               }
               if sender.at("phone", default: none) != none { parts.push("Telefon " + sender.phone) }
               if sender.at("email", default: none) != none { parts.push("E-Mail " + sender.email) }
