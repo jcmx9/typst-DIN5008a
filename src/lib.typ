@@ -14,6 +14,7 @@
   subject: none,
   closing: none,
   signature: none,
+  signature-width: 40mm,
   accent: rgb("#B03060"),
   debug: false,
   attachments: (),
@@ -151,7 +152,7 @@
   // all bold → semibold (headings, *strong*, etc.)
   show strong: it => text(weight: "semibold", it.body)
   show heading: it => text(weight: "semibold", size: 11pt, it.body)
-  set par(justify: true, leading: 5.5pt, spacing: 16.5pt)  // 150% line height (5.5pt between lines, 16.5pt = one blank line between paragraphs)
+  set par(justify: false, leading: 5.5pt, spacing: 16.5pt)  // 150% line height (5.5pt between lines, 16.5pt = one blank line between paragraphs)
   set list(marker: text(font: font-ui, "▪"))
   // prevent orphaned list items (min 2 together)
   show list: set block(breakable: false)
@@ -288,9 +289,9 @@
   // closing, signature, sender name — 3 blank lines between closing and name (DIN 5008)
   // signature: SVG string (from read()) — currentColor is replaced with Salix (#103c78)
   let salix = "#103c78"
-  // resolve signature: string (SVG data) → image with Salix color, max 30pt height
+  // resolve signature: string (SVG data) → image with Salix color
   let sig-img = if type(signature) == str {
-    image(bytes(signature.replace("currentColor", salix)), height: 30pt)
+    image(bytes(signature.replace("currentColor", salix)), width: signature-width)
   } else {
     signature
   }
