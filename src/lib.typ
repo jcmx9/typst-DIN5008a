@@ -317,7 +317,7 @@
       if sig-img != none {
         context {
           let sig-h = measure(sig-img).height
-          place(dx: -3mm, dy: -(sig-h + 2mm),
+          place(dx: -2mm, dy: -(sig-h + 2mm),
             box(stroke: dbg, fill: dbg-fill, sig-img))
         }
       }
