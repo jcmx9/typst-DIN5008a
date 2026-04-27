@@ -102,11 +102,12 @@
           line(length: 9mm, stroke: 0.75pt + accent))
       }
       // footer: absolute position on every page
-      // line at 273.71mm from top, text starts at 277.71mm, ends at 292mm (5mm from bottom)
+      // footer: line at footer-line-y, text bottom-aligned 7mm from page edge
       place(top + left, dx: margin-left, dy: footer-line-y,
         line(length: 165mm, stroke: 0.75pt + accent))
-      place(top + left, dx: margin-left, dy: footer-line-y + 4mm,
-        box(width: 165mm, stroke: dbg, fill: dbg-fill, {
+      {
+        // build footer content to measure its height
+        let footer-content = {
           set text(font: font-ui, size: 9pt, fill: gray)
           align(center, {
             {
@@ -137,7 +138,11 @@
               [Seite #pg von #total]
             }
           })
-        }))
+        }
+        let footer-height = measure(box(width: 165mm, footer-content)).height
+        place(top + left, dx: margin-left, dy: 297mm - 7mm - footer-height,
+          box(width: 165mm, stroke: dbg, fill: dbg-fill, footer-content))
+      }
     },
   )
 
@@ -317,7 +322,7 @@
       if sig-img != none {
         context {
           let sig-h = measure(sig-img).height
-          place(dx: -3mm, dy: -(sig-h + 2mm),
+          place(dx: -2mm, dy: -(sig-h + 2mm),
             box(stroke: dbg, fill: dbg-fill, sig-img))
         }
       }
