@@ -33,10 +33,9 @@
   let margin-left = 25mm              // left margin
   let margin-right = 20mm             // right margin (binding edge)
   let margin-top = 20mm               // top margin
-  let margin-bottom = 28mm              // 4mm + line + 4mm + 12.7mm (3×9pt + 2×4.5pt) + 7mm page edge
-  let footer-bottom = 297mm - 7mm       // footer box bottom: 7mm from page edge
-  let footer-line-y = footer-bottom - 12.7mm - 4mm  // separator line above footer text
-  // = 273.71mm from top
+  let has-bank = sender.at("iban", default: none) != none or sender.at("bic", default: none) != none or sender.at("bank", default: none) != none
+  let footer-text-height = if has-bank { 12.7mm } else { 7.94mm }  // 3 lines: 3×9pt+2×4.5pt, 2 lines: 2×9pt+1×4.5pt
+  let margin-bottom = 7mm + footer-text-height + 4mm + 0.75pt + 4mm  // page edge + text + gap + line + gap
   let return-addr-y = 40.7mm          // return address (bottom of Zusatz-/Vermerkzone)
   let addr-field-y = 44.7mm           // address zone top (27mm + 17.7mm)
   let info-block-y = 32.0mm           // information block top (DIN diagram: 32mm)
@@ -156,7 +155,7 @@
   set text(font: font-body, size: 11pt, lang: "de", region: "DE")
   // all bold → semibold (headings, *strong*, etc.)
   show strong: it => text(weight: "semibold", it.body)
-  show heading: it => text(weight: "semibold", size: 11pt, it.body)
+  show heading: it => block(sticky: true, text(weight: "semibold", size: 11pt, it.body))
   set par(justify: false, leading: 5.5pt, spacing: 16.5pt)  // 150% line height (5.5pt between lines, 16.5pt = one blank line between paragraphs)
   set list(marker: text(font: font-ui, "▪"))
   // prevent orphaned list items (min 2 together)
