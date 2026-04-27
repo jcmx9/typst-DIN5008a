@@ -101,12 +101,8 @@
         place(top + left, dx: 0mm, dy: fold-2,
           line(length: 9mm, stroke: 0.75pt + accent))
       }
-      // footer: absolute position on every page
-      // footer: line at footer-line-y, text bottom-aligned 7mm from page edge
-      place(top + left, dx: margin-left, dy: footer-line-y,
-        line(length: 165mm, stroke: 0.75pt + accent))
+      // footer: line + text bottom-aligned, 7mm from page edge
       {
-        // build footer content to measure its height
         let footer-content = {
           set text(font: font-ui, size: 9pt, fill: gray)
           align(center, {
@@ -140,7 +136,10 @@
           })
         }
         let footer-height = measure(box(width: 165mm, footer-content)).height
-        place(top + left, dx: margin-left, dy: 297mm - 7mm - footer-height,
+        let footer-text-y = 297mm - 7mm - footer-height
+        place(top + left, dx: margin-left, dy: footer-text-y - 4mm,
+          line(length: 165mm, stroke: 0.75pt + accent))
+        place(top + left, dx: margin-left, dy: footer-text-y,
           box(width: 165mm, stroke: dbg, fill: dbg-fill, footer-content))
       }
     },
