@@ -102,10 +102,10 @@
           line(length: 9mm, stroke: 0.75pt + accent))
       }
       // footer: absolute position on every page
-      // line at 273.71mm from top, text starts at 277.71mm, ends at 292mm (5mm from bottom)
+      // line at 273.71mm from top, text anchored at bottom (5mm from page bottom)
       place(top + left, dx: margin-left, dy: footer-line-y,
         line(length: 165mm, stroke: 0.75pt + accent))
-      place(top + left, dx: margin-left, dy: footer-line-y + 4mm,
+      place(bottom + left, dx: margin-left, dy: -5mm,
         box(width: 165mm, stroke: dbg, fill: dbg-fill, {
           set text(font: font-ui, size: 9pt, fill: gray)
           align(center, {
