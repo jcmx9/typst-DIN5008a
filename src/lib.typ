@@ -156,7 +156,7 @@
   // all bold → semibold (headings, *strong*, etc.)
   show strong: it => text(weight: "semibold", it.body)
   show heading: it => block(sticky: true, text(weight: "semibold", size: 11pt, it.body))
-  set par(justify: false, leading: 5.5pt, spacing: 16.5pt)  // 150% line height (5.5pt between lines, 16.5pt = one blank line between paragraphs)
+  set par(justify: false, leading: 5.5pt, spacing: 16.5pt, orphan-penalty: 100%, widow-penalty: 100%)  // 150% line height; no orphans/widows
   set list(marker: text(font: font-ui, "▪"))
   // prevent orphaned list items (min 2 together)
   show list: set block(breakable: false)
